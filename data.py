@@ -16,3 +16,19 @@ def init_dict_token_dex():
         for provider in orfeed_list_providers:
             token_dex[token][provider] = 0
     return token_dex
+
+def init_dict_token_token_dex():
+    res = []
+    path_resolved = []
+    for tokenSrc in token_symbols:
+        for tokenDst in token_symbols:
+            for provider in orfeed_list_providers:
+                pair_list = {tokenSrc, tokenDst}
+                if tokenSrc != tokenDst and (pair_list not in path_resolved):
+                    path_resolved.append(pair_list)
+                    elem = {
+                        "tokenSrc": tokenSrc,
+                        "tokenDst": tokenDst
+                    }
+                    res.append(elem)
+    return res
