@@ -24,21 +24,11 @@ class Orfeed:
         except Exception:
             return 0
 
-class Registry:
-    def __init__(self, network, project_id, private_key=None):
-        self.network = network
-        self.project_id = project_id
-        self.private_key = private_key
-        self.registry_address = Web3.toChecksumAddress(my_smartcontracts["registry"]["address"])
-        if private_key is not None:
-            web3.eth.Account().from_key(private_key)
-        self.w3 = Web3(Web3.HTTPProvider('https://'+self.network+'.infura.io/v3/'+project_id))
-        self.registry_contract = self.w3.eth.contract(address=self.registry_address, abi=my_smartcontracts["registry"]["abi"])
-    
-    def getAllOracles(self):
-        res = self.registry_contract.functions.getAllOracles().call()
-        return res
+    def getTokenAddress(self, symbol):
+        try:
+            return self.orfeed_contract.functions.getTokenAddress(symbol).call()
+        except Exception:
+            return -1
 
-    def getOracleInfo(self, name_reference=None):
-        res = self.registry_contract.functions.getOracleInfo(name_reference).call()
-        return res
+    def getTokenDecimalCount(self, address):
+        return self.orfeed_contract.functions.getTokenDecimalCount(address).call()
