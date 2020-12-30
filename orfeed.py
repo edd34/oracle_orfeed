@@ -1,28 +1,35 @@
 import web3
 from web3 import Web3
-import os
-from smartcontracts import my_smartcontracts, aave_liquidity_provider
+from smartcontracts import my_smartcontracts
 
 class Orfeed:
-    def __init__(self, network, project_id, private_key=None):
-        self.network = network
-        self.project_id = project_id
-        self.private_key = private_key
+    def __init__(self, web3):
         self.orfeed_address = Web3.toChecksumAddress(my_smartcontracts["orfeed"]["address"])
-        if private_key is not None:
-            web3.eth.Account().from_key(private_key)
-        self.w3 = Web3(Web3.HTTPProvider('https://'+self.network+'.infura.io/v3/'+project_id))
+        self.w3 = web3
         self.orfeed_contract = self.w3.eth.contract(address=self.orfeed_address, abi=my_smartcontracts["orfeed"]["abi"])
-    
+
     def getExchangeRate(self, _from, _to, _provider, _amount):
         if _from == _to or _amount <= 0:
-            return 0
-
+            return -1
         try:
-            res = self.orfeed_contract.functions.getExchangeRate(_from, _to, _provider, Web3.toWei(_amount, 'ether')).call()
-            return Web3.fromWei(res, 'ether')
+            return self.orfeed_contract.functions.getExchangeRate(_from, _to, _provider, _amount).call()
         except Exception:
-            return 0
+            return -1
+
+    def getExchangeRateNormalized(self, _from, _to, _provider):
+        if _from == _to:
+            return -1
+        token_address = self.getTokenAddress(_to)
+        decimal_count = self.getTokenDecimalCount(token_address)
+        return self.orfeed_contract.functions.getExchangeRate(_from, _to, _provider, Web3.toWei('1', 'ether')).call()
+
+    def getExchangeRateEthToToken(self, _to, _provider):
+        if _to == "ETH" :
+            return -1
+        try:
+            return self.orfeed_contract.functions.getExchangeRate("ETH", _to, _provider, Web3.toWei('1', 'ether')).call()
+        except Exception:
+            return -1
 
     def getTokenAddress(self, symbol):
         try:
