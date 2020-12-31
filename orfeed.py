@@ -19,9 +19,10 @@ class Orfeed:
     def getExchangeRateNormalized(self, _from, _to, _provider):
         if _from == _to:
             return -1
-        token_address = self.getTokenAddress(_to)
-        decimal_count = self.getTokenDecimalCount(token_address)
-        return self.orfeed_contract.functions.getExchangeRate(_from, _to, _provider, Web3.toWei('1', 'ether')).call()
+        try:
+            return self.orfeed_contract.functions.getExchangeRate(_from, _to, _provider, Web3.toWei('1', 'ether')).call()
+        except Exception:
+            return -1
 
     def getExchangeRateEthToToken(self, _to, _provider):
         if _to == "ETH" :
