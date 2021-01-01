@@ -60,11 +60,11 @@ def getTokenToTokenPriceFeed(orfeed_i, threshold = 0, verbose = False):
     for token in tqdm(dict_token_dex, desc="finding arbitrage", total=len(dict_token_dex)):
         tmp_res = {}
         for provider in ["UNISWAPBYSYMBOLV2", "KYBERBYSYMBOLV1"]:
-            buy = getTokenToTokenPrice(orfeed_i, "WETH", token, provider, amount=orfeed_i.w3.toWei('1', 'ether'))
-            sell = getTokenToTokenPrice(orfeed_i, token, "WETH", provider, amount=buy["price"])
+            buy = getTokenToTokenPrice(orfeed_i, "ETH", token, provider, amount=orfeed_i.w3.toWei('1', 'ether'))
+            sell = getTokenToTokenPrice(orfeed_i, token, "ETH", provider, amount=buy["price"])
             if not(buy["price"] > 0 and sell["price"] > 0):
                 continue
-            
+
             tmp_res[provider] = {
                 "buy_price_wei": buy["price"]/1e18,
                 "sell_price_wei": sell["price"]*buy["price"]/(1e18*1e18),
