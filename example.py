@@ -9,7 +9,7 @@ import time
 from tqdm import tqdm
 
 w3 = Web3(Web3.HTTPProvider('https://'+os.getenv("NETWORK")+'.infura.io/v3/'+os.getenv("INFURA_PROJECT_ID")))
-# w3 = Web3(Web3.HTTPProvider('http://127.0.0.1:8545'))
+# w3 = Web3(Web3.HTTPProvider('http://127.0.0.1:8545')) # uncomment if you use ganache-cli
 orfeed_i = Orfeed(w3)
 while True:
     res = getTokenToTokenPriceFeed(orfeed_i, verbose=True)
