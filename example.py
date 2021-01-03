@@ -1,4 +1,4 @@
-from functions import getTokenToTokenPriceFeed, getEthToTokenPriceFeed
+from functions import getTokenToTokenPriceFeed
 import pprint
 from web3 import Web3, eth
 import web3
