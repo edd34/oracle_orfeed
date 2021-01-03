@@ -22,7 +22,7 @@ pip3 install -r requirements.txt
 ## Usage
 
 ```python
-python3 main.py
+python3 example.py
 ```
 
 ## Contributing
