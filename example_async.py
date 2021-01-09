@@ -6,8 +6,7 @@ from functions import simple_getTokenToTokenPrice
 from orfeed import Orfeed
 from data import token_symbols
 
-
-w3 = Web3(Web3.HTTPProvider('https://'+os.getenv("NETWORK")+'.infura.io/v3/'+os.getenv("INFURA_PROJECT_ID")))
+w3 = Web3(Web3.HTTPProvider(os.getenv('INFURA_PROVIDER_MAINNET')))
 # w3 = Web3(Web3.HTTPProvider('http://127.0.0.1:8545')) # uncomment if you use ganache-cli
 orfeed_i = Orfeed(w3)
 
