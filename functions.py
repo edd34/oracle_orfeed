@@ -9,6 +9,21 @@ import web3
 from web3 import Web3
 from tqdm import tqdm
 
+def getTokenToTokenPrice(orfeed_i, tokenSrc, tokenDst, provider, amount=1, normalized=False):
+    if normalized == True:
+        res = orfeed_i.getExchangeRateNormalized(tokenSrc, tokenDst, provider)
+    else:
+        res = orfeed_i.getExchangeRate(tokenSrc, tokenDst, provider, amount)
+
+    return {
+        "tokenSrc" : tokenSrc,
+        "tokenDst" : tokenDst,
+        "tokenPair" : tokenSrc + '-' + tokenDst,
+        "provider" : provider,
+        "price" : res
+    }
+
+
 def getTokenToTokenPriceFeed(orfeed_i, threshold = 0, verbose = False):
     result = {}
     dict_token_dex = init_dict_token_dex()
@@ -98,17 +113,3 @@ def simple_getTokenToTokenPrice(orfeed_i, token):
         result = -1
 
     return result
-
-def getTokenToTokenPrice(orfeed_i, tokenSrc, tokenDst, provider, amount=1, normalized=False):
-    if normalized == True:
-        res = orfeed_i.getExchangeRateNormalized(tokenSrc, tokenDst, provider)
-    else:
-        res = orfeed_i.getExchangeRate(tokenSrc, tokenDst, provider, amount)
-
-    return {
-        "tokenSrc" : tokenSrc,
-        "tokenDst" : tokenDst,
-        "tokenPair" : tokenSrc + '-' + tokenDst,
-        "provider" : provider,
-        "price" : res
-    }
