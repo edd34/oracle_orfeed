@@ -1,4 +1,3 @@
-import web3
 from web3 import Web3
 from smartcontracts import my_smartcontracts
 
