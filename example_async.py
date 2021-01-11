@@ -26,15 +26,17 @@ class ThreadWithReturnValue(Thread):
 def run():
     a = time.perf_counter()
     list_thread = {}
-    for token in token_symbols:
-        list_thread[token] = ThreadWithReturnValue(target=simple_getTokenToTokenPrice, args=(orfeed_i, token))
-        list_thread[token].start()
+    for src_token in token_symbols:
+        for dst_token in token_symbols:
+            if src_token != dst_token:
+                list_thread[src_token + dst_token] = ThreadWithReturnValue(target=simple_getTokenToTokenPrice, args=(orfeed_i, src_token, token_symbols[src_token], dst_token, token_symbols[dst_token]))
+                list_thread[src_token + dst_token].start()
 
     # res = [{i: list_thread[i].join()} for i in list_thread if list_thread[i].join() != -1]
     res = {}
     for i in list_thread:
         val = list_thread[i].join()
-        if val != -1:
+        if val != -1 and val is not None:
             res[i] = list_thread[i].join()
     # import pdb; pdb.set_trace()
     sorted_list = sorted(res.items(), key=lambda x: x[1]["%"], reverse=True)
