@@ -36,7 +36,7 @@ token_symbols = {
         'decimals' : 18
     },
     "TUSD" : {
-
+        'decimals': 18
     },
     "LEND" : {
         'address' : 0x80fB784B7eD66730e8b1DBd9820aFD29931aab03,
@@ -61,6 +61,10 @@ token_symbols = {
     "KNC" : {
         'address' : 0xdd974d5c2e2928dea5f71b9825b8b646686bd200,
         'decimals' : 18
+    },
+    "ETH" : {
+    # 'address' : 0xdd974d5c2e2928dea5f71b9825b8b646686bd200,
+    'decimals' : 18
     }
     }
 
