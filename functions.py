@@ -73,17 +73,17 @@ def getTokenToTokenPriceFeed(orfeed_i, threshold = 0, verbose = False):
             print("")
     return result
 
-def simple_getTokenToTokenPrice(orfeed_i, token):
+def simple_getTokenToTokenPrice(orfeed_i, src_token, src_token_infos, dst_token, dst_token_infos):
     result = {}
     providers_list = ["UNISWAPBYSYMBOLV2", "KYBERBYSYMBOLV1"]
     tmp_res = {}
     for provider in providers_list:
-        buy = getTokenToTokenPrice(orfeed_i, "ETH", token, provider, amount=orfeed_i.w3.toWei('1', 'ether'))
-        sell = getTokenToTokenPrice(orfeed_i, token, "ETH", provider, amount=buy["price"])
+        buy = getTokenToTokenPrice(orfeed_i, src_token, dst_token, provider, amount=10**src_token_infos['decimals'])
+        sell = getTokenToTokenPrice(orfeed_i, dst_token, src_token, provider, amount=buy["price"])
         if buy["price"] > 0 and sell["price"] > 0:
             tmp_res[provider] = {
-                "buy_price_wei": buy["price"]/1e18,
-                "sell_price_wei": sell["price"]*buy["price"]/(1e18*1e18),
+                "buy_price_wei": buy["price"]/(10**dst_token_infos['decimals']),
+                "sell_price_wei": sell["price"]*buy["price"]/(10**(dst_token_infos['decimals'] + src_token_infos['decimals'])),
             }
         else:
             return -1
@@ -93,8 +93,10 @@ def simple_getTokenToTokenPrice(orfeed_i, token):
         "two": (tmp_res[providers_list[0]]['sell_price_wei'] - tmp_res[providers_list[1]]['buy_price_wei'])/tmp_res[providers_list[1]]['buy_price_wei'] * 100
     }
 
-    if path["one"] > path["two"] and path["one"] > 0: # buy at uniswap and sell at kyber
+    if path["one"] > path["two"] and path["one"] > 0 and path["one"] < 200: # buy at uniswap and sell at kyber
         result = {
+            "buy asset : ": dst_token,
+            "sell asset : ": src_token,
             "buy_at": providers_list[0],
             "buy_price": tmp_res[providers_list[0]]["buy_price_wei"],
             "sell_at": providers_list[1],
@@ -103,6 +105,8 @@ def simple_getTokenToTokenPrice(orfeed_i, token):
         }
     elif path["two"] > path["one"] and path["two"] > 0: # buy at kyber and sell at uniswap
         result = {
+            "buy asset : ": dst_token,
+            "sell asset : ": src_token,
             "sell_at": providers_list[0],
             "sell_price": tmp_res[providers_list[0]]["sell_price_wei"],
             "buy_at": providers_list[1],
