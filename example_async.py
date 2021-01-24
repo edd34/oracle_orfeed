@@ -43,7 +43,7 @@ def run():
     pprint.pprint(sorted_list)
     print(time.perf_counter() - a)
 
-while True:
-    run()
-    for i in tqdm(range(20), desc="cooldown"):
-        time.sleep(1)
+# while True:
+run()
+    # for i in tqdm(range(20), desc="cooldown"):
+    #     time.sleep(1)
