@@ -3,7 +3,7 @@ from web3 import Web3
 minABI = [
     # balanceOf
     {
-        "constant": true,
+        "constant": True,
         "inputs": [{"name": "_owner", "type": "address"}],
         "name": "balanceOf",
         "outputs": [{"name": "balance", "type": "uint256"}],
@@ -11,7 +11,7 @@ minABI = [
     },
     # decimals
     {
-        "constant": true,
+        "constant": True,
         "inputs": [],
         "name":"decimals",
         "outputs":[{"name": "", "type": "uint8"}],
