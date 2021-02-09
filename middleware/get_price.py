@@ -7,7 +7,7 @@ from lib.orfeed import Orfeed
 from lib.data import token_symbols
 import pandas as pd
 
-w3 = Web3(Web3.HTTPProvider(os.getenv('INFURA_PROVIDER_MAINNET')))
+w3 = Web3(Web3.HTTPProvider(os.getenv('BLOCKCHAIN_PROVIDER')))
 # w3 = Web3(Web3.HTTPProvider('http://127.0.0.1:8545')) # uncomment if you use ganache-cli
 orfeed_i = Orfeed(w3)
 
@@ -38,7 +38,7 @@ def get_raw_price_async():
         res[i] = list_thread[i].join()
     return res
 
-def get_clean_price(list_raw_price, coeff=25):
+def get_clean_price(list_raw_price, coeff=2000):
     result = {}
     dex_list = ["UNISWAPBYSYMBOLV2", "KYBERBYSYMBOLV1"]
     for pair in list_raw_price:
