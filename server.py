@@ -1,11 +1,11 @@
 from flask import Flask
-from example_async import run
+from app import get_list_arb
 
 app = Flask(__name__)
 
 @app.route('/arb')
 def arb():
-    return {"res": run()}, 200
+    return {"result": get_list_arb()}, 200
 
 
 if __name__=='__main__':
