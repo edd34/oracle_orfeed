@@ -1,28 +1,29 @@
 # Oracle OrFeed
 
-Oracle OrFeed is a Python program which retrieves the prices of the tokens provided by the oracle OrFeed
+Oracle OrFeed is a Python program which retrieves the prices of the tokens provided by the oracle OrFeed, and try to find arb opportunities.
 
 ## Environnement
-You have to rename `.env-example` to `.env`.  Then insert your INFURA_PROJECT_ID and your PRIVATE in `.env` file.
-
+You have to rename `.env-example` to `.env`.  Then insert your BLOCKCHAIN_PROVIDER in `.env` file. This can be
+NB : Leave the variable network as is.
 ```
-INFURA_PROJECT_ID=
-PRIVATE_KEY=
+BLOCKCHAIN_PROVIDER=
 NETWORK=mainnet
 ```
 
 ## Installation
 
-Install the package listed in requirements.txt
+Create a virtual environment and nstall the package listed in requirements.txt
 
 ```bash
+python3 -m venv venv
+source venv/bin/activate
 pip3 install -r requirements.txt
 ```
 
 ## Usage
 
 ```python
-python3 example.py
+python3 app.py
 ```
 
 ## Contributing

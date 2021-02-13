@@ -1,4 +1,4 @@
-from middleware.get_price import get_raw_price_async, get_clean_price, compute_arb_opportunities, get_output
+from lib.get_price import get_raw_price_async, get_clean_price, compute_arb_opportunities, get_output
 from pprint import pprint
 
 def get_list_arb():
