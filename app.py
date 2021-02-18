@@ -8,6 +8,11 @@ from pprint import pprint
 
 
 def get_list_arb():
+    """Run the arb finder
+
+    Returns:
+        List: List sorted by % of all arb opportunities found.
+    """
     dict_price_raw = get_raw_price_async()
     dict_clean_price = get_clean_price(dict_price_raw)
     list_arb_price = compute_arb_opportunities(dict_clean_price)
