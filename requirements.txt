@@ -1,2 +1,4 @@
-web3==5.13.1
-python-dotenv==0.15.0
+Flask==2.1.2
+python-dotenv==0.20.0
+tqdm==4.64.0
+web3==5.29.0
